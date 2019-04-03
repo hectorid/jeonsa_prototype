@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Player
 
+const PROJ_SCN = preload("res://scenes/Projectile.tscn")
+
 const FLOOR_NORMAL := Vector2(0,-1)
 const GRAVITY : float = 800.0
 const MOVE_SPEED : float = 100.0
@@ -43,7 +45,8 @@ func _physics_process(delta) -> void:
 	velocity = move_and_slide(velocity, FLOOR_NORMAL)
 	
 	if INPUT_SHOOT:
-		var proj = Projectile
+		var proj = PROJ_SCN.instance()
+		proj.global_position = global_position
 		Game.spawn(proj)
 	
 	
