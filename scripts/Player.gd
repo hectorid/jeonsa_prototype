@@ -3,13 +3,6 @@ class_name Player
 
 const PROJ_SCN = preload("res://scenes/Projectile.tscn")
 
-const FLOOR_NORMAL := Vector2(0,-1)
-const GRAVITY : float = 800.0
-const MAX_GRAVITY : float = 500.0 
-const MOVE_SPEED : float = 100.0
-const JUMP_FORCE : float = 250.0
-const TARGET_INDICATOR_DISTANCE : int = 12
-
 var velocity : Vector2
 
 var is_falling : bool
@@ -39,23 +32,23 @@ func _physics_process(delta) -> void:
 	is_on_floor = is_on_floor()
 	is_on_wall = is_on_wall()
 	
-	velocity.x = input_direction.x * MOVE_SPEED
+	velocity.x = input_direction.x * VAR.PLAYER_MOVE_SPEED
 	
-	velocity.y += GRAVITY * delta
-	if velocity.y > MAX_GRAVITY:
-		velocity.y = MAX_GRAVITY
+	velocity.y += VAR.PLAYER_GRAVITY * delta
+	if velocity.y > VAR.PLAYER_MAX_GRAVITY:
+		velocity.y = VAR.PLAYER_MAX_GRAVITY
 	
 	if (is_on_floor or (is_on_wall and is_falling)) and INPUT_JUMP:
-		velocity.y = -JUMP_FORCE
+		velocity.y = -VAR.PLAYER_JUMP_FORCE
 	
 	if velocity.x:
 		$Sprite.flip_h = velocity.x < 0
 	
-	velocity = move_and_slide(velocity, FLOOR_NORMAL)
+	velocity = move_and_slide(velocity, VAR.FLOOR_NORMAL)
 	
 	if input_direction:
 		target_direction = input_direction.normalized()
-		$TargetIndicator.position = target_direction * TARGET_INDICATOR_DISTANCE
+		$TargetIndicator.position = target_direction * VAR.PLAYER_INDICATOR_DISTANCE
 	
 	if INPUT_SHOOT:
 		var proj = PROJ_SCN.instance()
