@@ -5,6 +5,7 @@ const PROJ_SCN = preload("res://scenes/Projectile.tscn")
 
 const FLOOR_NORMAL := Vector2(0,-1)
 const GRAVITY : float = 800.0
+const MAX_GRAVITY : float = 500.0 
 const MOVE_SPEED : float = 100.0
 const JUMP_FORCE : float = 250.0
 const TARGET_INDICATOR_DISTANCE : int = 12
@@ -41,6 +42,8 @@ func _physics_process(delta) -> void:
 	velocity.x = input_direction.x * MOVE_SPEED
 	
 	velocity.y += GRAVITY * delta
+	if velocity.y > MAX_GRAVITY:
+		velocity.y = MAX_GRAVITY
 	
 	if (is_on_floor or (is_on_wall and is_falling)) and INPUT_JUMP:
 		velocity.y = -JUMP_FORCE
