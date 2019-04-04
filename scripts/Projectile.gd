@@ -1,7 +1,7 @@
 extends Area2D
 class_name Projectile
 
-const SPEED = 50
+const SPEED = 175
 
 var direction : Vector2 = Vector2(1,0)
 
