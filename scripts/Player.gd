@@ -12,9 +12,6 @@ var is_on_wall : bool
 
 var target_direction : Vector2
 
-func _ready() -> void:
-	pass
-
 func _physics_process(delta) -> void:
 	var INPUT_MOVE_UP := Input.get_action_strength('move_up')
 	var INPUT_MOVE_DOWN := Input.get_action_strength('move_down')
@@ -48,7 +45,7 @@ func _physics_process(delta) -> void:
 	
 	if input_direction:
 		target_direction = input_direction.normalized()
-		$TargetIndicator.position = target_direction * VAR.PLAYER_INDICATOR_DISTANCE
+#		$TargetIndicator.position = target_direction * VAR.PLAYER_INDICATOR_DISTANCE
 	
 	if INPUT_SHOOT:
 		var proj = PROJ_SCN.instance()
