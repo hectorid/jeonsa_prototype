@@ -9,6 +9,21 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "HBoxContainer",
+"class": "BaseConfigElement",
+"language": "GDScript",
+"path": "res://config/scripts/BaseConfigElement.gd"
+}, {
+"base": "BaseConfigElement",
+"class": "ConfigIntElement",
+"language": "GDScript",
+"path": "res://config/scripts/ConfigIntElement.gd"
+}, {
+"base": "BaseConfigElement",
+"class": "ConfigStringElement",
+"language": "GDScript",
+"path": "res://config/scripts/ConfigStringElement.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -20,6 +35,9 @@ _global_script_classes=[ {
 "path": "res://scripts/Projectile.gd"
 } ]
 _global_script_class_icons={
+"BaseConfigElement": "",
+"ConfigIntElement": "",
+"ConfigStringElement": "",
 "Player": "",
 "Projectile": ""
 }
@@ -32,7 +50,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-VAR="*res://config/GameConfig.gd"
+VAR="*res://config/scripts/GameConfig.gd"
 Game="*res://scripts/Game.gd"
 
 [display]
