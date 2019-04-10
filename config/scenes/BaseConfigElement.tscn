@@ -13,6 +13,6 @@ margin_top = 3.0
 margin_right = 100.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
-text = "INSERT LABEL"
+text = "ERROR"
 valign = 1
 
