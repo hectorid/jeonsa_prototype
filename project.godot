@@ -15,9 +15,19 @@ _global_script_classes=[ {
 "path": "res://config/scripts/BaseConfigElement.gd"
 }, {
 "base": "BaseConfigElement",
+"class": "ConfigFloatElement",
+"language": "GDScript",
+"path": "res://config/scripts/ConfigFloatElement.gd"
+}, {
+"base": "BaseConfigElement",
 "class": "ConfigIntElement",
 "language": "GDScript",
 "path": "res://config/scripts/ConfigIntElement.gd"
+}, {
+"base": "Label",
+"class": "ConfigSectonLabel",
+"language": "GDScript",
+"path": "res://config/scripts/ConfigSectionLabel.gd"
 }, {
 "base": "BaseConfigElement",
 "class": "ConfigStringElement",
@@ -36,7 +46,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BaseConfigElement": "",
+"ConfigFloatElement": "",
 "ConfigIntElement": "",
+"ConfigSectonLabel": "",
 "ConfigStringElement": "",
 "Player": "",
 "Projectile": ""
@@ -50,13 +62,13 @@ config/icon="res://icon.png"
 
 [autoload]
 
-VAR="*res://config/scripts/GameConfig.gd"
+Config="*res://config/scripts/GameConfig.gd"
 Game="*res://scripts/Game.gd"
 
 [display]
 
 window/size/width=480
-window/size/height=480
+window/size/height=336
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"

@@ -24,7 +24,8 @@ var _config = {
 		indicator_distance = 12
 	},
 	projectile = {
-		speed = 350
+		speed = 350,
+		max_distance = 1000
 	},
 	test = {
 		test_string = 'test',
@@ -43,15 +44,15 @@ func load_config() -> int:
 	if  result != OK:
 		print ('Error loading config file: %s' % result)
 		return result
-	
+
 	for section in _config.keys():
 		for key in _config[section].keys():
 			if _config_file.has_section_key(section, key):
 				var value = _config_file.get_value(section, key)
-				
+
 				_config[section][key] = value
 				print(section, ' -> ', key, ' = ', value, ' : ', typeof(value))
-	
+
 	print(_config)
 	return OK
 
@@ -60,8 +61,14 @@ func save_config():
 		for key in _config[section]:
 			var value = _config[section][key]
 			_config_file.set_value(section, key, value)
-	
+
 	_config_file.save(CONFIG_PATH)
 
-func get_config(section : String, key : String):
-	return
+func get_all() -> Dictionary:
+	return _config
+
+func get_section(section : String) -> Dictionary:
+	return _config[section]
+
+func get_var(section : String, key : String):
+	return _config[section][key]

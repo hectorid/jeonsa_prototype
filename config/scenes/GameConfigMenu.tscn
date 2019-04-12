@@ -19,24 +19,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-margin_left = 133.0
-margin_top = 133.0
-margin_right = 347.0
-margin_bottom = 347.0
+margin_left = 90.0
+margin_top = 8.0
+margin_right = 390.0
+margin_bottom = 328.0
+rect_min_size = Vector2( 300, 320 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 207.0
-margin_bottom = 207.0
-rect_min_size = Vector2( 200, 200 )
-size_flags_horizontal = 4
+margin_right = 293.0
+margin_bottom = 313.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="ConfigList" type="VBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer"]
-margin_right = 200.0
-margin_bottom = 200.0
+margin_right = 286.0
+margin_bottom = 306.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
