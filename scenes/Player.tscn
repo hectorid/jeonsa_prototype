@@ -16,6 +16,7 @@ texture = ExtResource( 2 )
 position = Vector2( 0, 6 )
 shape = SubResource( 1 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
+visible = false
 position = Vector2( 20, -14 )
 

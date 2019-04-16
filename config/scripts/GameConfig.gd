@@ -26,12 +26,6 @@ var _config = {
 	projectile = {
 		speed = 350,
 		max_distance = 1000
-	},
-	test = {
-		test_string = 'test',
-		test_int = 10,
-		test_float = 2.5,
-		test_vec2 = Vector2(1,1)
 	}
 }
 

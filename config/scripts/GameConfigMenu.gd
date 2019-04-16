@@ -17,6 +17,11 @@ func _ready():
 			add_config(key, value)
 		ConfigList.add_child(HSeparator.new())
 
+func _physics_process(delta):
+	if Input.is_action_just_pressed("config_menu"):
+		visible = !visible
+		get_tree().paused = visible
+
 
 func add_config(name : String, value) -> void:
 	var new_element : BaseConfigElement = null
