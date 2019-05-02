@@ -30,7 +30,6 @@ var _config = {
 }
 
 func _ready():
-#	save_config()
 	load_config()
 
 func load_config() -> int:
@@ -38,16 +37,14 @@ func load_config() -> int:
 	if  result != OK:
 		print ('Error loading config file: %s' % result)
 		return result
-
+	
 	for section in _config.keys():
 		for key in _config[section].keys():
 			if _config_file.has_section_key(section, key):
 				var value = _config_file.get_value(section, key)
-
+	
 				_config[section][key] = value
-				print(section, ' -> ', key, ' = ', value, ' : ', typeof(value))
-
-	print(_config)
+	
 	return OK
 
 func save_config():
@@ -66,3 +63,6 @@ func get_section(section : String) -> Dictionary:
 
 func get_var(section : String, key : String):
 	return _config[section][key]
+
+func set_var(section : String, key: String, value) -> void:
+	_config[section][key] = value

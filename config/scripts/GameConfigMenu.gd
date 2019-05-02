@@ -14,16 +14,18 @@ func _ready():
 		ConfigList.add_child(ConfigSectonLabel.new(section))
 		for key in config[section].keys():
 			var value = config[section][key]
-			add_config(key, value)
+			add_config(section, key, value)
 		ConfigList.add_child(HSeparator.new())
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("config_menu"):
 		visible = !visible
 		get_tree().paused = visible
+		if visible:
+			pass
 
 
-func add_config(name : String, value) -> void:
+func add_config(section : String, key : String, value) -> void:
 	var new_element : BaseConfigElement = null
 
 	match typeof(value):
@@ -38,5 +40,28 @@ func add_config(name : String, value) -> void:
 
 
 	if new_element != null:
-		new_element.init(name, value)
+		new_element.init(section, key, value)
 		ConfigList.add_child(new_element)
+
+func apply_config():
+	for element in ConfigList.get_children():
+		if element is BaseConfigElement:
+			var section = element.section
+			var key = element.key
+			var value = element.value
+			
+			Config.set_var(section, key, value)
+
+func reset_config():
+	var config := Config.get_all()
+	
+	for element in ConfigList.get_children():
+		if element is BaseConfigElement:
+			var section = element.section
+			var key = element.key
+			
+			element.value = config[section][key]
+
+func save_config():
+	apply_config()
+	Config.save_config()
