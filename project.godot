@@ -70,6 +70,8 @@ Game="*res://scripts/Game.gd"
 window/size/width=480
 window/size/height=336
 window/size/always_on_top=true
+window/size/test_width=960
+window/size/test_height=672
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

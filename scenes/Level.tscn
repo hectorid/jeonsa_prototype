@@ -42,4 +42,3 @@ position = Vector2( 59.9723, 234.858 )
 
 [node name="GameConfigMenu" parent="." instance=ExtResource( 4 )]
 visible = false
-

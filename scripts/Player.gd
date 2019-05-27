@@ -8,12 +8,16 @@ var vars : Dictionary = {}
 
 var velocity : Vector2
 
+var is_dead : bool
+var is_hit : bool
+var is_attacking : bool
+var is_moving: bool
 var is_falling : bool
 var is_on_ceiling : bool
 var is_on_floor : bool
 var is_on_wall : bool
 
-var target_direction : Vector2
+var target_direction := Vector2(1,0)
 
 func _physics_process(delta) -> void:
 	vars = Config.get_section('player')
@@ -29,6 +33,7 @@ func _physics_process(delta) -> void:
 	input_direction.x = INPUT_MOVE_RIGHT - INPUT_MOVE_LEFT
 	input_direction.y = INPUT_MOVE_DOWN - INPUT_MOVE_UP
 
+	is_moving = input_direction.x != 0
 	is_falling = velocity.y > 0
 	is_on_ceiling = is_on_ceiling()
 	is_on_floor = is_on_floor()
@@ -57,3 +62,23 @@ func _physics_process(delta) -> void:
 		proj.global_position = global_position
 		proj.direction = target_direction
 		Game.spawn(proj)
+		
+	#ANIMATION
+	if is_dead:
+		$AnimPlayer.switch('death')
+	elif is_hit:
+		$AnimPlayer.switch('hit')
+	elif is_on_floor:
+		if is_attacking:
+			$AnimPlayer.switch('atk_ground')
+		elif is_moving:
+			$AnimPlayer.switch('run')
+		else:
+			$AnimPlayer.switch('idle')
+	else:
+		if is_attacking:
+			$AnimPlayer.switch('atk_air')
+		elif is_falling or is_on_wall:
+			$AnimPlayer.switch('fall')
+		else:
+			$AnimPlayer.switch('jump')
