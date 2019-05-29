@@ -62,7 +62,7 @@ func _physics_process(delta) -> void:
 		proj.global_position = global_position
 		proj.direction = target_direction
 		Game.spawn(proj)
-		
+
 	#ANIMATION
 	if is_dead:
 		$AnimPlayer.switch('death')
