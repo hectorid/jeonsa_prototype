@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 12, 18 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=2]
 resource_name = "fall"
 length = 0.1
 tracks/0/type = "value"
@@ -19,26 +19,26 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 8 ]
+"values": [ 13 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
-length = 0.1
+[sub_resource type="Animation" id=3]
+length = 0.6
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = true
+tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 5 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "jump"
 length = 0.1
 tracks/0/type = "value"
@@ -51,11 +51,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 7 ]
+"values": [ 12 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "run"
+[sub_resource type="Animation" id=5]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -68,11 +67,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 1, 6 ]
+"values": [ 6, 11 ]
 }
 
-[sub_resource type="GDScript" id=4]
-resource_name = "AnimPlayer"
+[sub_resource type="GDScript" id=6]
 script/source = "extends AnimationPlayer
 
 func switch(name : String) -> void:
@@ -87,7 +85,8 @@ script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-hframes = 9
+hframes = 14
+frame = 7
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 6 )
@@ -96,12 +95,16 @@ shape = SubResource( 1 )
 [node name="Camera" type="Camera2D" parent="."]
 visible = false
 position = Vector2( 20, -14 )
+current = true
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
 
 [node name="AnimPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-playback_speed = 1.2
-anims/fall = SubResource( 7 )
-anims/idle = SubResource( 2 )
-anims/jump = SubResource( 6 )
-anims/run = SubResource( 3 )
-script = SubResource( 4 )
+anims/fall = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/run = SubResource( 5 )
+script = SubResource( 6 )
