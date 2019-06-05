@@ -9,15 +9,15 @@ var vars : Dictionary = {}
 
 var velocity : Vector2
 
-var is_dead : bool
-var is_hit : bool
-var is_charging : bool
-var is_attacking : bool
-var is_moving: bool
-var is_falling : bool
+var is_dead : bool = false
+var is_hit : bool = false
+var is_charging : bool = false
+var is_attacking : bool = false
+var is_moving: bool = false
+var is_falling : bool = false
 
-var is_on_floor : bool
-var is_on_wall : bool
+var is_on_floor : bool = false
+var is_on_wall : bool = false
 
 var target_direction := Vector2(1,0)
 
@@ -33,44 +33,52 @@ func _physics_process(delta) -> void:
 	var INPUT_MOVE_RIGHT := Input.get_action_strength('move_right')
 
 	var move_direction := Vector2()
-	
+
 	move_direction.x = INPUT_MOVE_RIGHT - INPUT_MOVE_LEFT
 	move_direction.y = INPUT_MOVE_DOWN - INPUT_MOVE_UP
 
 	is_moving = move_direction.x != 0
 	is_falling = velocity.y > 0
-	
+
 	is_on_floor = is_on_floor()
 	is_on_wall = is_on_wall()
-	
+
 	if not (is_dead or is_hit):
 		#HORIZONTAL MOVEMENT
-		if not is_charging and not is_attacking:
+		if is_on_floor and (is_charging or is_attacking):
+			velocity.x = 0
+		else:
 			velocity.x = move_direction.x * vars['move_speed']
-	
+
 		# GRAVITY
 		velocity.y += vars['gravity'] * delta
 		if velocity.y > vars['max_gravity']:
 			velocity.y = vars['max_gravity']
-	
+
+		#WALL SLIDE
+		if is_on_wall and velocity.y > 0:
+			velocity.y /= 2
+
 		# JUMP
 		var INPUT_JUMP := Input.is_action_just_pressed("jump")
 		if (is_on_floor or is_on_wall) and INPUT_JUMP:
 			velocity.y = -vars['jump_force']
-	
+
 		# SHOOT
 		if move_direction:
 			target_direction = move_direction.normalized()
 	#		$TargetIndicator.position = target_direction * vars['inidicator_distance']
-		
+
 		var INPUT_CHARGING := Input.is_action_pressed("shoot")
 		var INPUT_CHARGE_PRESS := Input.is_action_just_pressed("shoot")
 		var INPUT_CHARGE_RELEASE := Input.is_action_just_released("shoot")
-		
+
+		is_charging = INPUT_CHARGING
+
 		if INPUT_CHARGING:
 			if INPUT_CHARGE_PRESS:
 				charge = 1
-			
+
 			charge += vars['charge_rate'] * delta
 			if charge > MAX_ATK_POWER:
 				charge = MAX_ATK_POWER
@@ -81,18 +89,20 @@ func _physics_process(delta) -> void:
 				proj.global_position = global_position
 				proj.direction = target_direction
 				Game.spawn(proj)
-			
+
 			charge = 0
-	
-	
+	else:
+		is_charging = false
+
+
 	# APPLY MOVEMENT
 	velocity = move_and_slide(velocity, FLOOR_NORMAL)
-	
-	
+
+
 	#ANIMATION
 	if velocity.x:
 		$Sprite.flip_h = velocity.x < 0
-	
+
 	if is_dead:
 		$AnimPlayer.switch('death')
 	elif is_hit:
