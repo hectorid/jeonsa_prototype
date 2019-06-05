@@ -21,7 +21,10 @@ var _config = {
 		max_gravity = 1000,
 		move_speed = 200,
 		jump_force = 500,
-		indicator_distance = 12
+		indicator_distance = 12,
+		energy_regen = 1.0,
+		charge_rate = 1.5,
+		max_charges = 5
 	},
 	projectile = {
 		speed = 350,
