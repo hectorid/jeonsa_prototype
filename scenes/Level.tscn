@@ -40,5 +40,7 @@ tile_data = PoolIntArray( -6, 0, 0, -65536, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 59.9723, 234.858 )
 
-[node name="GameConfigMenu" parent="." instance=ExtResource( 4 )]
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="GameConfigMenu" parent="GUI" instance=ExtResource( 4 )]
 visible = false
