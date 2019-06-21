@@ -94,6 +94,8 @@ func process(delta):
 	var grav_modifier : float = 1.0
 	var can_move : bool = true
 
+	var sprite_flip : int = 0
+
 	#STATES
 	prev_state = state
 	state = next_state
@@ -115,10 +117,14 @@ func process(delta):
 		RUN:
 			$AnimPlayer.switch('run')
 
+			sprite_flip = move_direction.x
+
 			if INPUT_ATTACK_PRESS:
 				next_state = CHARGE
 			elif INPUT_JUMP_PRESS or velocity.y < 0:
 				next_state = JUMP
+			elif not on_floor:
+				next_state = FALL
 			elif not moving:
 				next_state = IDLE
 		JUMP:
@@ -127,12 +133,16 @@ func process(delta):
 
 			$AnimPlayer.switch('jump')
 
+			sprite_flip = move_direction.x
+
 			if INPUT_ATTACK_PRESS:
 				next_state = CHARGE
 			elif velocity.y >= 0:
 				next_state = FALL
 		FALL:
 			$AnimPlayer.switch('fall')
+
+			sprite_flip = move_direction.x
 
 			if INPUT_ATTACK_PRESS:
 				next_state = CHARGE
@@ -156,6 +166,8 @@ func process(delta):
 		LATCH:
 			$AnimPlayer.switch('latch')
 
+			sprite_flip = -move_direction.x
+
 			grav_modifier = 0.5
 
 			if on_wall and velocity.y > 0:
@@ -167,10 +179,11 @@ func process(delta):
 				next_state = FALL
 			
 			if on_floor:
+				sprite_flip = move_direction.x
 				next_state = IDLE
 
-	if velocity.x:
-		$Sprite.flip_h = velocity.x < 0
+	if sprite_flip != 0:
+		$Sprite.flip_h = sprite_flip < 0
 
 	#HORIZONTAL MOVEMENT
 	if can_move:
