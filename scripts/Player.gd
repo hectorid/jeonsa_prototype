@@ -106,13 +106,18 @@ func process(delta):
 		print(STATE[state])
 	match state:
 		IDLE:
-			$AnimPlayer.switch('idle')
+			if on_enter_state:
+				if prev_state == ATTACK:
+					$AnimPlayer.queue('idle')
+				else:
+					$AnimPlayer.play('idle')
+			
 
 			if INPUT_ATTACK_PRESS:
 				next_state = CHARGE
 			elif INPUT_JUMP_PRESS or velocity.y < 0:
 				next_state = JUMP
-			elif moving:
+			elif moving and not on_wall:
 				next_state = RUN
 		RUN:
 			$AnimPlayer.switch('run')
@@ -125,7 +130,7 @@ func process(delta):
 				next_state = JUMP
 			elif not on_floor:
 				next_state = FALL
-			elif not moving:
+			elif not moving or on_wall:
 				next_state = IDLE
 		JUMP:
 			if on_enter_state:
@@ -140,7 +145,9 @@ func process(delta):
 			elif velocity.y >= 0:
 				next_state = FALL
 		FALL:
-			$AnimPlayer.switch('fall')
+			if on_enter_state:
+				$AnimPlayer.play("fall_in")
+				$AnimPlayer.queue("fall")
 
 			sprite_flip = move_direction.x
 
@@ -168,10 +175,10 @@ func process(delta):
 
 			sprite_flip = -move_direction.x
 
-			grav_modifier = 0.5
+			grav_modifier = 0.1
 
-			if on_wall and velocity.y > 0:
-				velocity.y = 0
+#			if on_wall and velocity.y > 0:
+#				velocity.y = 0
 
 			if INPUT_JUMP_PRESS:
 				next_state = JUMP
@@ -192,9 +199,12 @@ func process(delta):
 		velocity.x = 0
 
 	# GRAVITY
-	velocity.y += vars['gravity'] * delta
-	if velocity.y > vars['max_gravity']:
-		velocity.y = vars['max_gravity']
+	var gravity: float =  vars['gravity'] * grav_modifier
+	var max_gravity : float = vars['max_gravity'] * grav_modifier
+	
+	velocity.y += gravity * delta
+	if velocity.y > max_gravity:
+		velocity.y = max_gravity
 
 	# APPLY MOVEMENT
 	velocity = move_and_slide(velocity, FLOOR_NORMAL)
