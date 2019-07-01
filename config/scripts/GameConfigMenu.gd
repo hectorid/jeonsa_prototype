@@ -21,8 +21,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("config_menu"):
 		visible = !visible
 		get_tree().paused = visible
-		if visible:
-			pass
 
 
 func add_config(section : String, key : String, value) -> void:
