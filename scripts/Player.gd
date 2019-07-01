@@ -146,8 +146,8 @@ func process(delta):
 				next_state = FALL
 		FALL:
 			if on_enter_state:
-				$AnimPlayer.play("fall_in")
-				$AnimPlayer.queue("fall")
+				$AnimPlayer.play('fall_in')
+				$AnimPlayer.queue('fall')
 
 			sprite_flip = move_direction.x
 
@@ -160,7 +160,7 @@ func process(delta):
 		CHARGE:
 			$AnimPlayer.switch('charge')
 
-			can_move = false
+#			can_move = false
 
 			if not INPUT_ATTACK:
 				next_state = ATTACK
@@ -173,7 +173,7 @@ func process(delta):
 		LATCH:
 			$AnimPlayer.switch('latch')
 
-			sprite_flip = -move_direction.x
+			sprite_flip = move_direction.x
 
 			grav_modifier = 0.1
 
@@ -186,7 +186,7 @@ func process(delta):
 				next_state = FALL
 			
 			if on_floor:
-				sprite_flip = move_direction.x
+				sprite_flip = -move_direction.x
 				next_state = IDLE
 
 	if sprite_flip != 0:
